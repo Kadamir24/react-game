@@ -8,7 +8,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 50px;
+    /* padding: 50px;
+    padding-top: 0; */
     line-height: 1;
   }
   
@@ -28,13 +29,15 @@
   
   .cards {
     display: grid;
-    grid-template: repeat(2, 1fr) / repeat(6, 1fr);
+    grid-template: repeat(2, 1fr) / repeat(8, 1fr);
     gap: 10px;
   }
   
   .card {
-    height: 320px;
-    width: 200px;
+    /* height: 320px;
+    width: 200px; */
+    height: 270px;
+    width: 150px;
     border-radius: 2px;
     background: #000;
     cursor: pointer;

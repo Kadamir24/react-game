@@ -7,6 +7,7 @@ let isGameEnd = false;
 export default function Game() {
   const [openedCard, setOpenedCard] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
+  const [flip, setFlipped] = useState<boolean>(true);
 
   function flipCard(index: any) {
     if (openedCard.length > 1) return;
@@ -33,6 +34,19 @@ export default function Game() {
   if (matched.length === (pairOfCharacters.length / 2)) {
     isGameEnd = true;
   }
+
+  let isFlipped:boolean = true;
+  useEffect(() => {
+    setTimeout(() => {
+      if (!localStorage.getItem('Start')) {
+        setTimeout(() => {
+          localStorage.setItem('Start', 'Flipped');
+          setFlipped(false);
+        }, 3000);
+      }
+    }, 3000)
+
+  }, [flip])
  
   return (
     <div className="App">
@@ -41,14 +55,17 @@ export default function Game() {
       </h1>
       <div className="cards">
         {pairOfCharacters.map((waifu, index) => {
-          let isFlipped:boolean = false;
+
+          if (localStorage.getItem('Start')) {
+            isFlipped = false;
+          } 
+         
           if (openedCard.includes(index)) {
             isFlipped = true
           };
           if (matched.includes(waifu.id)) {
             isFlipped = true
           };
-          console.log('waifus name', `./../../img/${waifu.name}.png`)
           return (
             <div
               className={`card ${isFlipped ? "flipped" : ""} `}
@@ -60,14 +77,15 @@ export default function Game() {
                   <img
                     src ={`./img/${waifu.name}.png`}
                     alt="waifu-name"
-                    width="200"
+                    // width="190"
+                    width="150"
                   />
                 </div>
                 <div className="back">
                   <img
                     src ={`./img/logo.png`}
                     alt="waifu-name"
-                    width="175"
+                    width="145"
                   />
                 </div>
               </div>

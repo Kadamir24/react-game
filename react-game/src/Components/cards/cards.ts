@@ -13,7 +13,9 @@ const characters = [
   { id: 3, name: "kanbaru" },
   { id: 4, name: "kiss-shot" },
   { id: 5, name: "nadeko" },
-  { id: 6, name: "hachikuji" }
+  { id: 6, name: "hachikuji" },
+  { id: 7, name: "tsukihi" },
+  { id: 8, name: "karen" }
 ];
   
 const pairOfCharacters: Characters[] = [...characters, ...characters];
