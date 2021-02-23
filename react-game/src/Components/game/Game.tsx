@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { Characters } from "../../shared/types";
+import { characters, charactersEva } from "../cards/cards";
 import pairOfCharacters from "./../cards/cards";
 import "./Game.css";
 
 let isGameEnd = false;
 
-export default function Game() {
+function Game() {
   const [openedCard, setOpenedCard] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
   const [flip, setFlipped] = useState<boolean>(true);
-
   function flipCard(index: any) {
     if (openedCard.length > 1) return;
     setOpenedCard((opened) => {
@@ -42,9 +43,9 @@ export default function Game() {
         setTimeout(() => {
           localStorage.setItem('Start', 'Flipped');
           setFlipped(false);
-        }, 3000);
+        }, 2000);
       }
-    }, 3000)
+    }, 2000)
 
   }, [flip])
  
@@ -96,3 +97,5 @@ export default function Game() {
     </div>
   );
 }
+
+export default Game;

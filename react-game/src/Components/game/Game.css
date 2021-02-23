@@ -1,13 +1,14 @@
-* {
+/* * {
     box-sizing: border-box;
-  }
+  } */
   
-  body {
+  .App {
     background: #d0e0e6;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     /* padding: 50px;
     padding-top: 0; */
     line-height: 1;
