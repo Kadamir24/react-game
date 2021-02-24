@@ -33,7 +33,7 @@ const FandomMenu = () => {
             }}>
                 <Link to='/Game'>
                     <img
-                    src ={`./img/monogatari.jpg`}
+                    src ={`./img/evangelion.jpg`}
                     alt="waifu-name"
                     />
                     <div className={styles.img__description_layer}>
@@ -43,14 +43,19 @@ const FandomMenu = () => {
                 </div>
     
 
-                <div className={styles.card}>
+                <div className={styles.card} onClick={() => { 
+                localStorage.setItem('Fandom', 'Fate')
+                setTimeout(() => window.location.reload(false), 0)
+            }}>
+                <Link to='/Game'>
                     <img
-                    src ={`./img/monogatari.jpg`}
+                    src ={`./img/fate.jpg`}
                     alt="waifu-name"
                     />
                     <div className={styles.img__description_layer}>
-                        <p className={styles.img__description}>Monogatari Series</p>
+                        <p className={styles.img__description}>Fate/Stay Night</p>
                     </div>
+                </Link>
                 </div>
 
             </div>

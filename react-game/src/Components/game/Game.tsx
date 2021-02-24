@@ -40,15 +40,12 @@ function Game() {
 
   let isFlipped:boolean = true;
   useEffect(() => {
-    setTimeout(() => {
       if (!localStorage.getItem('Start')) {
         setTimeout(() => {
           localStorage.setItem('Start', 'Flipped');
           setFlipped(false);
         }, 2000);
       }
-    }, 2000)
-
   }, [flip])
  
   return (
@@ -66,7 +63,10 @@ function Game() {
            { localStorage.setItem('Mode', 'Normal')
             window.location.reload(false) }
           }/>
-          <Button title="Hard"/>
+          <Button title="Hard" onClick={() =>
+           { localStorage.setItem('Mode', 'Hard')
+            window.location.reload(false) }
+          }/>
         </div>
       </div>
       <h1>
@@ -102,7 +102,7 @@ function Game() {
                 </div>
                 <div className="back">
                   <img
-                    src ={`./img/logo.png`}
+                    src ={`./img/${waifu.logo}.png`}
                     alt="waifu-name"
                     width="145"
                   />
