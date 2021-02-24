@@ -93,4 +93,16 @@
     color: #fff;
     transform: scale(1.02);
   }
+
+  .Menu {
+    width: 70%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .Mode {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+  }
   

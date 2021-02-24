@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Characters } from "../../shared/types";
+import Button from "../Button/Button";
 import { characters, charactersEva } from "../cards/cards";
 import pairOfCharacters from "./../cards/cards";
 import "./Game.css";
@@ -51,6 +53,22 @@ function Game() {
  
   return (
     <div className="App">
+      <div className="Menu">
+        <Link to="/">
+          <Button title="Choose fandom"/>
+        </Link>
+        <div className="Mode">
+          <Button title="Easy" onClick={() =>
+           { localStorage.setItem('Mode', 'Easy')
+            window.location.reload(false) }
+          }/>
+          <Button title="Normal" onClick={() =>
+           { localStorage.setItem('Mode', 'Normal')
+            window.location.reload(false) }
+          }/>
+          <Button title="Hard"/>
+        </div>
+      </div>
       <h1>
         { isGameEnd ? 'You found your waifus!' : ''}
       </h1>

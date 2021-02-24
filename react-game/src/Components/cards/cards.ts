@@ -8,7 +8,7 @@ function shuffle(array:any) {
   }
 }
 
-export const characters = [
+export let characters = [
   { id: 1, name: "hitagi" },
   { id: 2, name: "hanekawa" },
   { id: 3, name: "kanbaru" },
@@ -19,7 +19,7 @@ export const characters = [
   { id: 8, name: "karen" }
 ];
 
-export const charactersEva = [
+export let charactersEva = [
   { id: 1, name: "hitagi" },
   { id: 2, name: "hitagi" },
   { id: 3, name: "hitagi" },
@@ -29,6 +29,15 @@ export const charactersEva = [
   { id: 7, name: "hitagi" },
   { id: 8, name: "hitagi" },
 ];
+
+if (localStorage.getItem('Mode') === 'Easy') {
+  characters = characters.slice(0, 4)
+  charactersEva = charactersEva.slice(0, 4)
+} else if (localStorage.getItem('Mode') === 'Normal') {
+  characters = characters.slice(0, 8)
+  charactersEva = charactersEva.slice(0, 8)
+}
+localStorage.removeItem('Mode')
 // const pairOfCharacters: Characters[] = [...characters, ...characters];
 
 let pairOfCharacters: Characters[] = [...characters, ...characters];
