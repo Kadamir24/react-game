@@ -5,6 +5,9 @@ import Button from "../Button/Button";
 import { characters, charactersEva } from "../cards/cards";
 import pairOfCharacters from "./../cards/cards";
 import "./Game.css";
+import useSound from 'use-sound';
+// // @ts-ignore 
+// import cardFlipSound from './audio/Card-flip-sound-effect.mp3';
 
 let isGameEnd = false;
 
@@ -12,8 +15,11 @@ function Game() {
   const [openedCard, setOpenedCard] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
   const [flip, setFlipped] = useState<boolean>(true);
+  const [tries, setTries] = useState<number>(0);
+  const [correct, setCorrect] = useState<number>(0);
   function flipCard(index: any) {
     if (openedCard.length > 1) return;
+    playCard()
     setOpenedCard((opened) => {
       return [...opened, index];
     });
@@ -24,14 +30,17 @@ function Game() {
 
     const first = pairOfCharacters[openedCard[0]];
     const second = pairOfCharacters[openedCard[1]];
-
+    setTries(() => tries + 1);
     if (second && first.id === second.id) {
+      setCorrect(() => correct + 1);;
       setMatched([...matched, first.id]);
+      correctSound()
     }
 
     if (openedCard.length === 2) {
       setTimeout(() => setOpenedCard([]), 1000);
     }
+    // playCard()
   }, [openedCard]);
 
   if (matched.length === (pairOfCharacters.length / 2)) {
@@ -47,6 +56,22 @@ function Game() {
         }, 2000);
       }
   }, [flip])
+
+
+  const [playCard] = useSound(
+    './audio/Card-flip-sound-effect.mp3',
+    { volume: 0.25 }
+  )
+
+  const [correctSound] = useSound(
+    './audio/Correct-answer.mp3',
+    { volume: 0.25 }
+  )
+
+  const [playMusic] = useSound(
+    './audio/bakeop.mp3',
+    { volume: 0.25 }
+  )
  
   return (
     <div className="App">
@@ -54,6 +79,7 @@ function Game() {
         <Link to="/">
           <Button title="Choose fandom"/>
         </Link>
+        <Button title="Play Music" onClick={() => playMusic()}/>
         <div className="Mode">
           <Button title="Easy" onClick={() =>
            { localStorage.setItem('Mode', 'Easy')
@@ -72,6 +98,7 @@ function Game() {
       <h1>
         { isGameEnd ? 'You found your waifus!' : ''}
       </h1>
+      <h3>{ `${tries} tries and ${correct} correct answers` }</h3>
       <div className="cards">
         {pairOfCharacters.map((waifu, index) => {
 
