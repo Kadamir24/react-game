@@ -17,6 +17,7 @@ function Game() {
   const [flip, setFlipped] = useState<boolean>(true);
   const [tries, setTries] = useState<number>(0);
   const [correct, setCorrect] = useState<number>(0);
+  const [gameVolume, setGameVolume] = useState<number>(0.5);
   function flipCard(index: any) {
     if (openedCard.length > 1) return;
     playCard()
@@ -68,18 +69,74 @@ function Game() {
     { volume: 0.25 }
   )
 
-  const [playMusic] = useSound(
-    './audio/bakeop.mp3',
-    { volume: 0.25 }
-  )
- 
+  // const [playMusic] = useSound(
+  //   './audio/bakeop.mp3',
+  //   { volume: 0.25 }
+  // )
+
+  const Pause = (props:any) => {
+    return (
+      <svg className="button" viewBox="0 0 60 60" onClick={()=>props.stop()}>
+        <polygon points="0,0 15,0 15,60 0,60" />
+        <polygon points="25,0 40,0 40,60 25,60" />
+      </svg>
+    );
+  };
+  
+  const Play = (props:any) => {
+    return (
+      <svg className="button" viewBox="0 0 60 60" onClick={props.play}>
+        <polygon points="0,0 50,30 0,60" />
+      </svg>
+    );
+  };
+
+  let musicTheme;
+  if (localStorage.getItem('Fandom') === 'Monogatari') {
+    musicTheme = './audio/bakeop.mp3';
+  } else if (localStorage.getItem('Fandom') === 'Evangelion') {
+    musicTheme = './audio/cruel-angel.mp3';
+  } else if (localStorage.getItem('Fandom') === 'Fate') {
+    musicTheme = './audio/fate.mp3';
+  }
+
+
+
+
+
+  // const [play, { stop, isPlaying }] = useSound('./audio/bakeop.mp3');
+  const [play, { stop, isPlaying }] = useSound(`${musicTheme}`, { volume: gameVolume });
+  console.log('VOLUME',gameVolume)
   return (
     <div className="App">
       <div className="Menu">
         <Link to="/">
           <Button title="Choose fandom"/>
         </Link>
-        <Button title="Play Music" onClick={() => playMusic()}/>
+        {/* <Button title="Play Music" onClick={() => playMusic()}/> */}
+        <div className="Menu_sv">
+          <div className="Menu_sound">
+          <Button title="-" onClick={ () => {
+            if (gameVolume > 0 ) {
+              setGameVolume(gameVolume - 0.1)
+            }
+          } }/>
+          <div className="playMusic">
+            {isPlaying ? <Pause stop={stop} /> : <Play play={play} />}
+              Music
+            </div>
+            <Button title="+" onClick={ () => {
+            if (gameVolume < 0.9 ) {
+              setGameVolume(gameVolume + 0.1)
+            }
+          } }/>
+          </div>
+
+          <div className="Menu_volume">Volume: {Math.ceil(gameVolume*10)}</div>
+
+
+        </div>
+
         <div className="Mode">
           <Button title="Easy" onClick={() =>
            { localStorage.setItem('Mode', 'Easy')
@@ -96,7 +153,7 @@ function Game() {
         </div>
       </div>
       <h1>
-        { isGameEnd ? 'You found your waifus!' : ''}
+        { isGameEnd ? 'You found all waifus!' : ''}
       </h1>
       <h3>{ `${tries} tries and ${correct} correct answers` }</h3>
       <div className="cards">

@@ -55,12 +55,19 @@
   }
   
   .img__description {
+    color: #fff;
     transition: .2s;
     transform: translateY(1em);
   }
   
   .card:hover .img__description {
     transform: translateY(0);
+  }
+
+  h1 {
+    color: black;
+    font-size: 36px;
+    font-family: Courier;
   }
 
   

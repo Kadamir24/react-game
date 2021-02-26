@@ -1,6 +1,13 @@
 .button {
-    background-color: yellow;
+    width: 75px;
+    border-radius: 5px;
+    background-color: #51dce0;
+    font-size: 16px;
+    font-family: Courier;
     &:hover {
         cursor: pointer;
+        background: #dba8b1;
+        color: #fff;
+        transform: scale(1.02);
     }
 }

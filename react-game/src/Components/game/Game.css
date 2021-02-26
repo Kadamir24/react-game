@@ -105,4 +105,33 @@
     display: flex;
     justify-content: space-between;
   }
+
+  .playMusic {
+    width: 50px;
+    height: 100%;
+    border-radius: 5px;
+    font-family: Courier;
+    /* background-color: #fff; */
+    /* text-align: center; */
+  }
+
+  .Menu_sound {
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+  }
+
+  .Menu_sv {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 300px;
+    height: 100px
+  }
+
+  .Menu_volume {
+    font-family: Courier;
+   font-size: 28px;
+    text-align: center;
+  }
   
