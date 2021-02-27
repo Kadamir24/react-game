@@ -85,6 +85,13 @@ if (localStorage.getItem('Fandom') === 'Monogatari') {
 console.log('PAIRSofCHaractes', pairOfCharacters)
 shuffle(pairOfCharacters);
 
+// localStorage.setItem("pairOfCharacters", JSON.stringify(pairOfCharacters));
+if (localStorage.getItem('pairOfCharacters')) {
+  pairOfCharacters = JSON.parse(localStorage.getItem("pairOfCharacters") || "[]");
+} else {
+  localStorage.setItem("pairOfCharacters", JSON.stringify(pairOfCharacters));
+}
+
 
 
 export default pairOfCharacters;

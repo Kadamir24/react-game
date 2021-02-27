@@ -11,6 +11,7 @@ const FandomMenu = () => {
             <h1>Choose your fandom</h1>
            
             <div className={styles.card} onClick={() => { 
+                localStorage.removeItem('pairOfCharacters')
                 localStorage.setItem('Fandom', 'Monogatari')
                 setTimeout(() => window.location.reload(false), 0)
                 }}>
@@ -27,7 +28,8 @@ const FandomMenu = () => {
     
         
         
-            <div className={styles.card}  onClick={() => { 
+            <div className={styles.card}  onClick={() => {
+                localStorage.removeItem('pairOfCharacters') 
                 localStorage.setItem('Fandom', 'Evangelion')
                 setTimeout(() => window.location.reload(false), 0)
             }}>
@@ -43,7 +45,8 @@ const FandomMenu = () => {
                 </div>
     
 
-                <div className={styles.card} onClick={() => { 
+                <div className={styles.card} onClick={() => {
+                localStorage.removeItem('pairOfCharacters') 
                 localStorage.setItem('Fandom', 'Fate')
                 setTimeout(() => window.location.reload(false), 0)
             }}>

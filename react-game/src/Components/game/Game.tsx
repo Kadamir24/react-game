@@ -25,6 +25,11 @@ function Game() {
       return [...opened, index];
     });
   }
+  // localStorage.setItem("pairOfCharacters", JSON.stringify(pairOfCharacters));
+  // localStorage.setItem("pairOfCharacters", JSON.stringify(pairOfCharacters));
+  // if (localStorage.getItem('pairOfCharacters')) {
+  //   pairOfCharacters = JSON.parse(localStorage.getItem("pairOfCharacters") || "[]");
+  // }
 
   useEffect(() => {
     if (openedCard.length < 2) return;
@@ -73,6 +78,7 @@ function Game() {
   //   './audio/bakeop.mp3',
   //   { volume: 0.25 }
   // )
+  console.log('pairs', pairOfCharacters)
 
   const Pause = (props:any) => {
     return (
@@ -105,7 +111,7 @@ function Game() {
 
   // const [play, { stop, isPlaying }] = useSound('./audio/bakeop.mp3');
   const [play, { stop, isPlaying }] = useSound(`${musicTheme}`, { volume: gameVolume });
-  console.log('VOLUME',gameVolume)
+  console.log('openCArds', openedCard)
   return (
     <div className="App"  style={{ 
       backgroundImage: `url(./img/${backgroundTheme}-${back}.jpg)`,
@@ -118,6 +124,13 @@ function Game() {
           <Button title="Choose fandom"/>
         </Link>
         {/* <Button title="Play Music" onClick={() => playMusic()}/> */}
+        <div className="newGame">
+        <Button title="New Game" onClick={ () => {
+          localStorage.removeItem('pairOfCharacters')
+          window.location.reload(false)
+          } }/>
+        </div>
+
         <div className="BackGround">
           <Button title="background" onClick={ () => {
             if (back === 3) {
@@ -155,14 +168,17 @@ function Game() {
         <div className="Mode">
           <Button title="Easy" onClick={() =>
            { localStorage.setItem('Mode', 'Easy')
+           localStorage.removeItem('pairOfCharacters')
             window.location.reload(false) }
           }/>
           <Button title="Normal" onClick={() =>
            { localStorage.setItem('Mode', 'Normal')
+           localStorage.removeItem('pairOfCharacters')
             window.location.reload(false) }
           }/>
           <Button title="Hard" onClick={() =>
            { localStorage.setItem('Mode', 'Hard')
+           localStorage.removeItem('pairOfCharacters')
             window.location.reload(false) }
           }/>
         </div>
