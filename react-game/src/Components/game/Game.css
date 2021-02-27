@@ -13,6 +13,7 @@
     padding-top: 0; */
     line-height: 1;
   }
+
   
   p {
     text-align: right;
@@ -130,8 +131,13 @@
   }
 
   .Menu_volume {
+    color: red;
     font-family: Courier;
    font-size: 28px;
     text-align: center;
+  }
+
+  .BackGround {
+    width: 150px;
   }
   

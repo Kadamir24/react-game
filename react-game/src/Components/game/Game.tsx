@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Characters } from "../../shared/types";
 import Button from "../Button/Button";
-import { characters, charactersEva } from "../cards/cards";
 import pairOfCharacters from "./../cards/cards";
 import "./Game.css";
 import useSound from 'use-sound';
@@ -18,6 +16,7 @@ function Game() {
   const [tries, setTries] = useState<number>(0);
   const [correct, setCorrect] = useState<number>(0);
   const [gameVolume, setGameVolume] = useState<number>(0.5);
+  const [back, setBack] = useState<number>(1);
   function flipCard(index: any) {
     if (openedCard.length > 1) return;
     playCard()
@@ -90,14 +89,17 @@ function Game() {
       </svg>
     );
   };
-
+  let backgroundTheme;
   let musicTheme;
   if (localStorage.getItem('Fandom') === 'Monogatari') {
     musicTheme = './audio/bakeop.mp3';
+    backgroundTheme=`monogatari-background`
   } else if (localStorage.getItem('Fandom') === 'Evangelion') {
     musicTheme = './audio/cruel-angel.mp3';
+    backgroundTheme=`eva-background`
   } else if (localStorage.getItem('Fandom') === 'Fate') {
     musicTheme = './audio/fate.mp3';
+    backgroundTheme=`fate-background`
   }
 
 
@@ -108,12 +110,27 @@ function Game() {
   const [play, { stop, isPlaying }] = useSound(`${musicTheme}`, { volume: gameVolume });
   console.log('VOLUME',gameVolume)
   return (
-    <div className="App">
+    <div className="App"  style={{ 
+      backgroundImage: `url(./img/${backgroundTheme}-${back}.jpg)`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      width:'100%' 
+    }}>
       <div className="Menu">
         <Link to="/">
           <Button title="Choose fandom"/>
         </Link>
         {/* <Button title="Play Music" onClick={() => playMusic()}/> */}
+        <div className="BackGround">
+          <Button title="background" onClick={ () => {
+            if (back === 3) {
+              setBack(1)
+            } else {
+              setBack(back + 1)
+            }
+          } }/>
+        </div>
+
         <div className="Menu_sv">
           <div className="Menu_sound">
           <Button title="-" onClick={ () => {
@@ -136,6 +153,7 @@ function Game() {
 
 
         </div>
+
 
         <div className="Mode">
           <Button title="Easy" onClick={() =>
