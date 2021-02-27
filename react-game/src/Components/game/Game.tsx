@@ -17,6 +17,7 @@ function Game() {
   const [correct, setCorrect] = useState<number>(0);
   const [gameVolume, setGameVolume] = useState<number>(0.5);
   const [back, setBack] = useState<number>(1);
+  const [fullScreen, setFullScreen] = useState<boolean>(false);
   function flipCard(index: any) {
     if (openedCard.length > 1) return;
     playCard()
@@ -102,10 +103,6 @@ function Game() {
     backgroundTheme=`fate-background`
   }
 
-
-
-
-
   // const [play, { stop, isPlaying }] = useSound('./audio/bakeop.mp3');
   const [play, { stop, isPlaying }] = useSound(`${musicTheme}`, { volume: gameVolume });
   console.log('VOLUME',gameVolume)
@@ -169,6 +166,18 @@ function Game() {
             window.location.reload(false) }
           }/>
         </div>
+
+        <Button title="Screen" onClick={ () => {
+          if (!fullScreen) {
+            document.documentElement.requestFullscreen();
+            setFullScreen(true)
+          } else {
+            document.exitFullscreen();
+            setFullScreen(false)
+          }
+          
+        } }/>
+
       </div>
       <h1>
         { isGameEnd ? 'You found all waifus!' : ''}
