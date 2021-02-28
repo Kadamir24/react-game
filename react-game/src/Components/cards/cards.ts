@@ -1,6 +1,5 @@
 import { Characters } from "../../shared/types";
 
-console.log('kek')
 function shuffle(array:any) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));

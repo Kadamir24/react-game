@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../Button/Button";
 import pairOfCharacters from "./../cards/cards";
@@ -13,10 +13,10 @@ function Game() {
   const [openedCard, setOpenedCard] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
   const [flip, setFlipped] = useState<boolean>(true);
-  const [tries, setTries] = useState<number>(0);
-  const [correct, setCorrect] = useState<number>(0);
+  const [tries, setTries] = useState<number>(Number(localStorage.getItem('tries')) || 0);
+  const [correct, setCorrect] = useState<number>(Number(localStorage.getItem('correct')) || 0);
   const [gameVolume, setGameVolume] = useState<number>(0.5);
-  const [back, setBack] = useState<number>(1);
+  const [back, setBack] = useState<number>(Number(localStorage.getItem('back')) || 1);
   const [fullScreen, setFullScreen] = useState<boolean>(false);
   function flipCard(index: any) {
     if (openedCard.length > 1) return;
@@ -36,9 +36,27 @@ function Game() {
 
     const first = pairOfCharacters[openedCard[0]];
     const second = pairOfCharacters[openedCard[1]];
+    if (localStorage.getItem('tries')) {
+      setTries(() => Number(localStorage.getItem('tries')));
+    } 
     setTries(() => tries + 1);
+    localStorage.setItem('tries', String(tries+1))
     if (second && first.id === second.id) {
-      setCorrect(() => correct + 1);;
+  
+      if (localStorage.getItem('OpenedCard')) {
+        let locStore = localStorage.getItem('OpenedCard')
+        let oldArr = JSON.parse(locStore || '[]');
+        let newArr = [...openedCard, ...oldArr];
+        localStorage.setItem('OpenedCard',JSON.stringify(newArr));
+      } else {
+        localStorage.setItem('OpenedCard',JSON.stringify(openedCard))
+      }
+
+      if (localStorage.getItem('correct')) {
+        setCorrect(() => Number(localStorage.getItem('correct')));
+      } 
+      setCorrect(() => correct + 1);
+      localStorage.setItem('correct', String(correct+1))
       setMatched([...matched, first.id]);
       correctSound()
     }
@@ -49,21 +67,41 @@ function Game() {
     // playCard()
   }, [openedCard]);
 
-  if (matched.length === (pairOfCharacters.length / 2)) {
+  if (matched.length === (pairOfCharacters.length / 2) || 
+  JSON.parse(localStorage.getItem('OpenedCard') || '[]').length === (pairOfCharacters.length)) {
     isGameEnd = true;
   }
 
   let isFlipped:boolean = true;
-  useEffect(() => {
-      if (!localStorage.getItem('Start')) {
+    
+    // useEffect(() => {
+
+      // if (!localStorage.getItem('Start')) {
+      //   console.log('WTF')
+      //   // localStorage.setItem('Start', JSON.stringify('Flipped'));
+      //   // setFlipped(true)
+      //   setTimeout(() => {
+      //        localStorage.setItem('Start', JSON.stringify('Flipped'));
+      //     // localStorage.setItem('Start', 'Flipped');
+      //     setFlipped(false);
+
+      //   }, 2000);
+      // } 
+    //  }, [flip])
+
+      if (localStorage.getItem('Start') === null) {
+        console.log('WTF')
+        // localStorage.setItem('Start', JSON.stringify('Flipped'));
+        // setFlipped(true)
         setTimeout(() => {
-          localStorage.setItem('Start', 'Flipped');
+             localStorage.setItem('Start', 'Flipped');
+          // localStorage.setItem('Start', 'Flipped');
           setFlipped(false);
+
         }, 2000);
-      }
-  }, [flip])
+      } 
 
-
+    //  const currentTime = useMemo(() => Date.now() + 600000, [])
   const [playCard] = useSound(
     './audio/Card-flip-sound-effect.mp3',
     { volume: 0.25 }
@@ -127,6 +165,10 @@ function Game() {
         <div className="newGame">
         <Button title="New Game" onClick={ () => {
           localStorage.removeItem('pairOfCharacters')
+          localStorage.removeItem('OpenedCard')
+          localStorage.removeItem('Start')
+          localStorage.removeItem('tries')
+          localStorage.removeItem('correct')
           window.location.reload(false)
           } }/>
         </div>
@@ -135,9 +177,13 @@ function Game() {
           <Button title="background" onClick={ () => {
             if (back === 3) {
               setBack(1)
+              localStorage.setItem('back', String(1))
+              
             } else {
               setBack(back + 1)
+              localStorage.setItem('back', String(back+1))
             }
+            
           } }/>
         </div>
 
@@ -169,16 +215,22 @@ function Game() {
           <Button title="Easy" onClick={() =>
            { localStorage.setItem('Mode', 'Easy')
            localStorage.removeItem('pairOfCharacters')
+           localStorage.removeItem('OpenedCard')
+           localStorage.removeItem('Start')
             window.location.reload(false) }
           }/>
           <Button title="Normal" onClick={() =>
            { localStorage.setItem('Mode', 'Normal')
            localStorage.removeItem('pairOfCharacters')
+           localStorage.removeItem('OpenedCard')
+           localStorage.removeItem('Start')
             window.location.reload(false) }
           }/>
           <Button title="Hard" onClick={() =>
            { localStorage.setItem('Mode', 'Hard')
            localStorage.removeItem('pairOfCharacters')
+           localStorage.removeItem('OpenedCard')
+           localStorage.removeItem('Start')
             window.location.reload(false) }
           }/>
         </div>
@@ -198,13 +250,24 @@ function Game() {
       <h1>
         { isGameEnd ? 'You found all waifus!' : ''}
       </h1>
-      <h3>{ `${tries} tries and ${correct} correct answers` }</h3>
+      {/* <h3>{ `${localStorage.getItem('tries') ? localStorage.getItem('tries') : tries} tries and 
+      ${localStorage.getItem('correct') ? localStorage.getItem('correct') : correct} correct answers` }</h3> */}
+            <h3>{ `${tries} tries and 
+      ${correct} correct answers` }</h3>
       <div className="cards">
         {pairOfCharacters.map((waifu, index) => {
 
           if (localStorage.getItem('Start')) {
             isFlipped = false;
-          } 
+          }
+          
+          if (localStorage.getItem('OpenedCard')) {
+            let locStore = localStorage.getItem('OpenedCard')
+            let oldArr = JSON.parse(locStore || '[]');
+            if (oldArr.includes(index)) {
+              isFlipped = true;
+            }
+          }
          
           if (openedCard.includes(index)) {
             isFlipped = true

@@ -6,7 +6,7 @@ import FandomMenu from "./pages/FandomMenu/FandomMenu";
 import Footer from "./Components/Footer/Footer";
 
 export default function App() {
-  localStorage.removeItem('Start');
+  // localStorage.removeItem('Start');
   return (
     <>
       {/* <Game /> */}

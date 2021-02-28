@@ -13,6 +13,10 @@ const FandomMenu = () => {
             <div className={styles.card} onClick={() => { 
                 localStorage.removeItem('pairOfCharacters')
                 localStorage.setItem('Fandom', 'Monogatari')
+                localStorage.removeItem('OpenedCard')
+                localStorage.removeItem('Start')
+                localStorage.removeItem('tries')
+                localStorage.removeItem('correct')
                 setTimeout(() => window.location.reload(false), 0)
                 }}>
                 <Link to='/Game'>
@@ -31,6 +35,10 @@ const FandomMenu = () => {
             <div className={styles.card}  onClick={() => {
                 localStorage.removeItem('pairOfCharacters') 
                 localStorage.setItem('Fandom', 'Evangelion')
+                localStorage.removeItem('OpenedCard')
+                localStorage.removeItem('Start')
+                localStorage.removeItem('tries')
+                localStorage.removeItem('correct')
                 setTimeout(() => window.location.reload(false), 0)
             }}>
                 <Link to='/Game'>
@@ -48,6 +56,10 @@ const FandomMenu = () => {
                 <div className={styles.card} onClick={() => {
                 localStorage.removeItem('pairOfCharacters') 
                 localStorage.setItem('Fandom', 'Fate')
+                localStorage.removeItem('OpenedCard')
+                localStorage.removeItem('Start')
+                localStorage.removeItem('tries')
+                localStorage.removeItem('correct')
                 setTimeout(() => window.location.reload(false), 0)
             }}>
                 <Link to='/Game'>
