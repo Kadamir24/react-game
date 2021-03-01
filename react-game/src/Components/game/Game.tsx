@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import Button from "../Button/Button";
+import { Button, RoundButton } from "../Button/Button";
 import pairOfCharacters from "./../cards/cards";
 import "./Game.css";
 import useSound from 'use-sound';
-// // @ts-ignore 
-// import cardFlipSound from './audio/Card-flip-sound-effect.mp3';
+
 
 let isGameEnd = false;
 
@@ -18,6 +17,17 @@ function Game() {
   const [gameVolume, setGameVolume] = useState<number>(0.5);
   const [back, setBack] = useState<number>(Number(localStorage.getItem('back')) || 1);
   const [fullScreen, setFullScreen] = useState<boolean>(false);
+  const [actionSound, setActionSound] = useState<number>(Number(localStorage.getItem('mute')) || 0.25);
+
+  useEffect( () => {
+    console.log('chetam')
+    if ((localStorage.getItem('mute'))) {
+      setActionSound(0)
+    }
+  }, [actionSound])
+  
+  // console.log('UPDATE')
+
   function flipCard(index: any) {
     if (openedCard.length > 1) return;
     playCard()
@@ -25,11 +35,7 @@ function Game() {
       return [...opened, index];
     });
   }
-  // localStorage.setItem("pairOfCharacters", JSON.stringify(pairOfCharacters));
-  // localStorage.setItem("pairOfCharacters", JSON.stringify(pairOfCharacters));
-  // if (localStorage.getItem('pairOfCharacters')) {
-  //   pairOfCharacters = JSON.parse(localStorage.getItem("pairOfCharacters") || "[]");
-  // }
+
 
   useEffect(() => {
     if (openedCard.length < 2) return;
@@ -73,29 +79,11 @@ function Game() {
   }
 
   let isFlipped:boolean = true;
-    
-    // useEffect(() => {
 
-      // if (!localStorage.getItem('Start')) {
-      //   console.log('WTF')
-      //   // localStorage.setItem('Start', JSON.stringify('Flipped'));
-      //   // setFlipped(true)
-      //   setTimeout(() => {
-      //        localStorage.setItem('Start', JSON.stringify('Flipped'));
-      //     // localStorage.setItem('Start', 'Flipped');
-      //     setFlipped(false);
-
-      //   }, 2000);
-      // } 
-    //  }, [flip])
 
       if (localStorage.getItem('Start') === null) {
-        console.log('WTF')
-        // localStorage.setItem('Start', JSON.stringify('Flipped'));
-        // setFlipped(true)
         setTimeout(() => {
              localStorage.setItem('Start', 'Flipped');
-          // localStorage.setItem('Start', 'Flipped');
           setFlipped(false);
 
         }, 2000);
@@ -104,19 +92,13 @@ function Game() {
     //  const currentTime = useMemo(() => Date.now() + 600000, [])
   const [playCard] = useSound(
     './audio/Card-flip-sound-effect.mp3',
-    { volume: 0.25 }
+    { volume: actionSound }
   )
 
   const [correctSound] = useSound(
     './audio/Correct-answer.mp3',
-    { volume: 0.25 }
+    { volume: actionSound }
   )
-
-  // const [playMusic] = useSound(
-  //   './audio/bakeop.mp3',
-  //   { volume: 0.25 }
-  // )
-  console.log('pairs', pairOfCharacters)
 
   const Pause = (props:any) => {
     return (
@@ -146,7 +128,7 @@ function Game() {
     musicTheme = './audio/fate.mp3';
     backgroundTheme=`fate-background`
   }
-
+  console.log('ACTION SOUND', actionSound)
   // const [play, { stop, isPlaying }] = useSound('./audio/bakeop.mp3');
   const [play, { stop, isPlaying }] = useSound(`${musicTheme}`, { volume: gameVolume });
   console.log('openCArds', openedCard)
@@ -184,6 +166,18 @@ function Game() {
               localStorage.setItem('back', String(back+1))
             }
             
+          } }/>
+        </div>
+
+        <div>
+          <RoundButton onClick={ () => {
+            if (localStorage.getItem('mute')) {
+              localStorage.removeItem('mute')
+              setActionSound(0.25)
+            } else {
+              localStorage.setItem('mute', '0')
+              setActionSound(0)
+            }
           } }/>
         </div>
 
@@ -287,14 +281,16 @@ function Game() {
                     src ={`./img/${waifu.name}.png`}
                     alt="waifu-name"
                     // width="190"
-                    width="150"
+                   
+                    className="front-image"
                   />
                 </div>
                 <div className="back">
                   <img
                     src ={`./img/${waifu.logo}.png`}
                     alt="waifu-name"
-                    width="145"
+                  
+                    className="back-image"
                   />
                 </div>
               </div>

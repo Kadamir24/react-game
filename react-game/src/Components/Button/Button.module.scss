@@ -11,3 +11,17 @@
         transform: scale(1.02);
     }
 }
+
+.round_button {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #51dce0;
+}
+
+@media (max-width: 1314px) {
+    .button {
+        width: 70px;
+        font-size: 12px;
+    }
+}

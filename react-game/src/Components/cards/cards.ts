@@ -69,7 +69,7 @@ if (localStorage.getItem('Mode') === 'Easy') {
   charactersEva = charactersEva.slice(0, 8)
   charactersFate = charactersFate.slice(0, 8)
 }
-localStorage.removeItem('Mode')
+// localStorage.removeItem('Mode')
 // const pairOfCharacters: Characters[] = [...characters, ...characters];
 
 let pairOfCharacters: Characters[] = [...characters, ...characters];

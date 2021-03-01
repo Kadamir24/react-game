@@ -144,3 +144,61 @@
   h3 {
     color: #ffffff;
   }
+
+  .front-image {
+    width: 150px;
+  }
+
+  .back-image {
+    width: 145px;
+  }
+
+
+  @media (max-width: 1314px) {
+    .card {
+      width: 130px;
+      height: 240px;
+    }
+
+    .back-image {
+      width: 125px;
+    }
+
+    .front-image {
+      width: 120px;
+    }
+
+    .BackGround {
+      width: 84px;
+    }
+  }
+
+  @media (max-width: 1314px) {
+    .card {
+      width: 100px;
+      height: 210px;
+    }
+
+    .back-image {
+      width: 110px;
+    }
+
+    .front-image {
+      width: 100px;
+    }
+  }
+
+
+  @media (max-width: 905px) {
+    .cards {
+      display: grid;
+      grid-template: repeat(2, 1fr) / repeat(4, 1fr);
+      gap: 5px;
+    }
+
+    .Menu {
+      width: 50%;
+      display: block;
+      justify-content: space-around;
+    }
+  }
