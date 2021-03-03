@@ -1,0 +1,33 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    background-color: #51dce0;
+    width: 100%;
+    position:fixed;
+    left:0px;
+    bottom:0px;
+}
+
+.logo {
+    width: 100px;
+    height: 40px;
+}
+
+.left {
+    display: flex;
+}
+
+.year {
+    font-size: 36px;
+    // font-family: Courier;
+}
+
+.author {
+    font-size: 28px;
+    text-decoration: none;
+    color: #ffffff;
+    &:hover {
+        color: #dba8b1;
+    }
+}
